@@ -1,0 +1,3 @@
+INDEX VERSION 1.130
+C:\D\MyPractice\Java\jee\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\755011405.index
+\Servlet2_Lab12\src

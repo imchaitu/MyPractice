@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<center>
+		<h1>Java Learning Center</h1>
+		<h2>Add Enquiry Form</h2>
+		<form action="register.jlc" method="post">
+			<table>
+				<tr>
+					<td>Full Name</td>
+					<td><input type="text" name="fname" value="fullName" /></td>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td><input type="text" name="email" /></td>
+				</tr>
+				<tr>
+					<td>Phone</td>
+					<td><input type="text" name="phone" /></td>
+				</tr>
+				<tr>
+					<td>Gender</td>
+					<td><input type="radio" name="gender" value="Male" />Male<input
+						type="radio" name="gender" value="Female" />Female</td>
+				</tr>
+				<tr>
+					<td>Course</td>
+					<td><input type="checkbox" name="course" value="Module 1" />Module
+						1<br /> <input type="checkbox" name="course" value="Module 2" />Module
+						2<br /> <input type="checkbox" name="course" value="Module 3" />Module
+						3<br /> <input type="checkbox" name="course" value="Module 4" />Module
+						4<br /></td>
+				</tr>
+				<tr>
+					<td>Timings</td>
+					<td><select name="timings">
+							<option value="Select">Select</option>
+							<option value="7.00A.M-9.00A.M">7.00A.M-9.00A.M</option>
+							<option value="9.00A.M-11.00A.M">9.00A.M-11.00A.M</option>
+							<option value="4.00P.M-6.00P.M">4.00P.M-6.00P.M</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td>Remarks</td>
+					<td><textarea name="remarks" rows="6" cols="20"></textarea></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center"><input  type="submit"
+							value=" Add Enquiry " /></td>
+				</tr>
+			</table>
+		</form>
+	</center>
+</body>
+</html>

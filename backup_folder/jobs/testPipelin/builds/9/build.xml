@@ -1,0 +1,69 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<flow-build plugin="workflow-job@2.25">
+  <actions>
+    <org.jenkinsci.plugins.workflow.cps.replay.ReplayFlowFactoryAction plugin="workflow-cps@2.57.3">
+      <replacementLoadedScripts/>
+    </org.jenkinsci.plugins.workflow.cps.replay.ReplayFlowFactoryAction>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-UserIdCause>
+            <userId>chaitu</userId>
+          </hudson.model.Cause_-UserIdCause>
+          <int>1</int>
+        </entry>
+        <entry>
+          <org.jenkinsci.plugins.workflow.cps.replay.ReplayCause plugin="workflow-cps@2.57.3">
+            <originalNumber>8</originalNumber>
+          </org.jenkinsci.plugins.workflow.cps.replay.ReplayCause>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+  </actions>
+  <queueId>107</queueId>
+  <timestamp>1554475689631</timestamp>
+  <startTime>1554475689667</startTime>
+  <result>FAILURE</result>
+  <duration>478</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <execution class="org.jenkinsci.plugins.workflow.cps.CpsFlowExecution">
+    <result>FAILURE</result>
+    <script>println &quot;start&quot;
+def build = currentBuild.getRawBuild()
+def testResults = build.getAction(hudson.tasks.junit.TestResultAction.class).getFailCount();
+ </script>
+    <loadedScripts class="map"/>
+    <durabilityHint>MAX_SURVIVABILITY</durabilityHint>
+    <timings class="map">
+      <entry>
+        <string>flowNode</string>
+        <long>276251856</long>
+      </entry>
+      <entry>
+        <string>classLoad</string>
+        <long>15046007</long>
+      </entry>
+      <entry>
+        <string>run</string>
+        <long>348016856</long>
+      </entry>
+      <entry>
+        <string>parse</string>
+        <long>28051076</long>
+      </entry>
+      <entry>
+        <string>saveProgram</string>
+        <long>12795696</long>
+      </entry>
+    </timings>
+    <sandbox>true</sandbox>
+    <iota>4</iota>
+    <head>1:4</head>
+    <done>true</done>
+    <resumeBlocked>false</resumeBlocked>
+  </execution>
+  <completed>true</completed>
+  <checkouts class="hudson.util.PersistedList"/>
+</flow-build>

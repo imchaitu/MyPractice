@@ -1,0 +1,10 @@
+package mt.practice;
+
+public class Lab752 {
+
+
+}
+
+class MyThread extends Thread{
+	
+}

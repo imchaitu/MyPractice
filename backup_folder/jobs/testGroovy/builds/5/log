@@ -1,0 +1,10 @@
+Started by user [8mha:////4EZVLm0Z5+OrAMeCIO/ToIVEJVNXJmO3D1eoJXLGnAJRAAAAmB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAyREgYe/dLi1CL95IzEzJJSABDIuMjBAAAA[0mChaitanaya Tatisetti
+Building in workspace C:\D\Programms\Jenkins\workspace\testGroovy
+[testGroovy] $ C:\D\Programms\Groovy\Groovy-2.3.9\bin\groovy.exe C:\D\Programms\Jenkins\workspace\testGroovy\hudson5565410684795806234.groovy
+error: dynamic library C:\D\Programms\Java\jdk1.8.0_121\jre\bin\server\jvm.dll exists but could not be loaded!
+This may be caused e.g. by trying to use a 32-bit executable to load a 64-bit jvm (or vice versa)
+error (win code 193): (null)
+error: could not find client or server jvm under C:\D\Programms\Java\jdk1.8.0_121
+       please check that it is a valid jdk / jre containing the desired type of jvm
+Build step 'Execute Groovy script' marked build as failure
+Finished: FAILURE

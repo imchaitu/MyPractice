@@ -1,0 +1,28 @@
+package mt.practice;
+
+public class Lab763 {
+
+}
+
+class Account {
+	int bal = 970;
+
+	public void withdraw(int amt) {
+		if (bal > amt) {
+			System.out.println(Thread.currentThread().getName() + " is goint to withdraw...." + bal);
+			try {
+				Thread.sleep(1200);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			bal -= amt;
+			System.out.println(Thread.currentThread().getName() + " is completed withdraw..:" + bal);
+		} else {
+			System.out.println("No Funds for " + Thread.currentThread().getName());
+		}
+	}
+
+	public int getBal() {
+		return bal;
+	}
+}

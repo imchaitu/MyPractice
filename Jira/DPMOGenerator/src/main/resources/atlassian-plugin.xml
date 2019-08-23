@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="DPMOGenerator"/>
+
+    <!-- add our web resources -->
+    <web-resource key="DPMOGenerator-resources" name="DPMOGenerator Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        <resource type="download" name="PMO Generator.css" location="/css/PMO Generator.css"/>
+        <resource type="download" name="PMO Generator.js" location="/js/PMO Generator.js"/>
+        <resource type="download" name="images/" location="/images"/>
+        <context>DPMOGenerator</context>
+
+        <component-import key="applicationProperties" i18n-name-key="applicationProperties.name"
+                          interface="com.atlassian.sal.api.ApplicationProperties"/>
+        <!-- START Create linked Action -->
+
+    </web-resource>
+
+    <web-item name="DPMO Time-Sheet Module" i18n-name-key="DPMO Time-Sheet Generator Button" key="DPMO Time-Sheet Module"
+              section="operations-subtasks" weight="1">
+        <description key="Button for Time-Sheet Generation">Time-Sheet Generator Button Module</description>
+        <label key="Create Timesheet"/>
+        <link linkId="time-generator-button-link">/secure/DPMOGeneratorAction!Default.jspa?issueId=$!issueId&amp;child=Timesheet</link>
+        <condition class="com.capgemini.jira.webwork.conditions.TimeSheetGeneratorCondition">
+            <param name="issuekey" value="issue.key"/>
+        </condition>
+    </web-item>
+
+    <web-item name="DPMO Milestone Module" i18n-name-key="DPMO Milestone Generator Button"
+              key="DPMO Milestone Module" section="operations-subtasks" weight="2">
+        <description key="Button for Milestone Generation">Milestone Generator Button Module</description>
+        <label key="Create Milestone"/>
+        <link linkId="milestone-generator-button-link">/secure/DPMOGeneratorAction!Default.jspa?issueId=$!issueId&amp;child=Milestone
+        </link>
+        <condition class="com.capgemini.jira.webwork.conditions.DPMOMilestoneGeneratorCondition">
+            <param name="issuekey" value="issue.key"/>
+        </condition>
+    </web-item>
+
+    <webwork1 key="DPMO Generator Module" name="DPMO Generator Module" i18n-name-key="DPMO Generator Module Action">
+        <description key="Generates Issues">Generator Action Module</description>
+        <actions>
+            <action name="com.capgemini.jira.webwork.actions.DPMOGeneratorAction" alias="DPMOGeneratorAction">
+                <view name="success">/templates/DPMOgenerator/success.vm</view>
+                <view name="input">/templates/DPMOgenerator/input.vm</view>
+                <view name="error">/templates/DPMOgenerator/error.vm</view>
+            </action>
+        </actions>
+    </webwork1>
+
+</atlassian-plugin>

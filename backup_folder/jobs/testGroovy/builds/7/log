@@ -1,0 +1,8 @@
+Started by user [8mha:////4EZVLm0Z5+OrAMeCIO/ToIVEJVNXJmO3D1eoJXLGnAJRAAAAmB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAyREgYe/dLi1CL95IzEzJJSABDIuMjBAAAA[0mChaitanaya Tatisetti
+Building in workspace C:\D\Programms\Jenkins\workspace\testGroovy
+[testGroovy] $ C:\D\Programms\Groovy\groovy-2.4.3\bin\groovy.bat C:\D\Programms\Jenkins\workspace\testGroovy\hudson5456834693829419481.groovy
+Caught: groovy.lang.MissingPropertyException: No such property: build for class: hudson5456834693829419481
+groovy.lang.MissingPropertyException: No such property: build for class: hudson5456834693829419481
+	at hudson5456834693829419481.run(hudson5456834693829419481.groovy:2)
+Build step 'Execute Groovy script' marked build as failure
+Finished: FAILURE

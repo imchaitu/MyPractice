@@ -1,0 +1,38 @@
+package scripts
+
+import com.atlassian.crowd.embedded.api.User
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.issue.CustomFieldManager
+import com.atlassian.jira.issue.fields.CustomField
+import com.atlassian.jira.issue.link.IssueLinkManager
+import com.atlassian.jira.issue.link.IssueLinkType
+import com.atlassian.jira.issue.link.IssueLinkTypeManager
+
+// get custom field value
+CustomFieldManager customFieldManager = ComponentAccessor.getCustomFieldManager()
+CustomField hiddenLink = customFieldManager.getCustomFieldObjectByName("HiddenLinkID")
+
+def linkValue = issue.getCustomFieldValue(hiddenLink)
+if (linkValue != null) {
+
+    // get user for change history
+    User user = ComponentAccessor.getJiraAuthenticationContext().getUser().getDirectoryUser()
+
+    IssueLinkManager issueLinkManager = ComponentAccessor.getIssueLinkManager()
+
+    // create issue link, 10003 is the id for relates to link type, 1 is the sequence for display in detailed view of issue
+    Collection<IssueLinkType> issueLinkTypes = ComponentAccessor.getComponent(IssueLinkTypeManager.class).issueLinkTypes
+    String linkID = null
+    for (IssueLinkType linkType : issueLinkTypes) {
+        String name = linkType.getName()
+        if (name == "Relates") {// change link name here
+            linkID = linkType.getId()
+            break
+        }
+    }
+
+    if (linkID != null) {
+        issueLinkManager.createIssueLink(issue.getId(), Long.parseLong(linkValue), Long.parseLong(linkID), Long.parseLong("1"), user)
+        return linkID
+    }
+}

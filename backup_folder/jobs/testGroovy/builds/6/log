@@ -1,0 +1,8 @@
+Started by user [8mha:////4EZVLm0Z5+OrAMeCIO/ToIVEJVNXJmO3D1eoJXLGnAJRAAAAmB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAyREgYe/dLi1CL95IzEzJJSABDIuMjBAAAA[0mChaitanaya Tatisetti
+Building in workspace C:\D\Programms\Jenkins\workspace\testGroovy
+[testGroovy] $ C:\D\Programms\Groovy\groovy-2.4.3\bin\groovy.bat C:\D\Programms\Jenkins\workspace\testGroovy\hudson2904600203565987511.groovy
+Caught: groovy.lang.MissingPropertyException: No such property: manager for class: hudson2904600203565987511
+groovy.lang.MissingPropertyException: No such property: manager for class: hudson2904600203565987511
+	at hudson2904600203565987511.run(hudson2904600203565987511.groovy:1)
+Build step 'Execute Groovy script' marked build as failure
+Finished: FAILURE

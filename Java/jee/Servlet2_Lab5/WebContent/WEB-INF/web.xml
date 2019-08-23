@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>Servlet2_Lab5</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <context-param>
+    <param-name>website</param-name>
+    <param-value>www.google.com</param-value>
+  </context-param>
+  <servlet>
+    <description></description>
+    <display-name>HelloServlet</display-name>
+    <servlet-name>HelloServlet</servlet-name>
+    <servlet-class>com.practice.servlet2.HelloServlet</servlet-class>
+    <init-param>
+    	<param-name>email</param-name>
+    	<param-value>hello@jlc.com</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HelloServlet</servlet-name>
+    <url-pattern>/hello.jlc</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>HaiServlet</display-name>
+    <servlet-name>HaiServlet</servlet-name>
+    <servlet-class>com.practice.servlet2.HaiServlet</servlet-class>
+    <init-param>
+    	<param-name>email</param-name>
+    	<param-value>hai@jlc.com</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HaiServlet</servlet-name>
+    <url-pattern>/hai.jlc</url-pattern>
+  </servlet-mapping>
+</web-app>

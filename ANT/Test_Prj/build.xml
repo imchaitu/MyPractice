@@ -1,0 +1,7 @@
+<project name="testing" default="run">
+	<target name="run">
+		<echo>Entered target...</echo>
+		<dirname property="dirc.name" file="test_data/symlink_dir/symlink_1/test_file1"></dirname>
+		<echo>${dirc.name}</echo>
+	</target>
+</project>

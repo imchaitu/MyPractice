@@ -1,0 +1,20 @@
+package mt.practice;
+
+public class Lab754 {
+
+}
+
+class MyThread754 implements Runnable {
+	
+	public MyThread754() {
+		start();
+	}
+	
+	@Override
+	public void run() {
+		Thread th = Thread.currentThread();
+		ThreadGroup tg = th.getThreadGroup();
+		System.out.println("Thread Name: " + th.getName());
+		System.out.println("Thread group Name: " + th.getName());
+	}
+}

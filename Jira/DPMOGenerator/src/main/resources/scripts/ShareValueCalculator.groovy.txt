@@ -1,0 +1,23 @@
+package scripts
+
+import com.atlassian.jira.component.ComponentAccessor
+import com.atlassian.jira.issue.CustomFieldManager
+import com.atlassian.jira.issue.fields.CustomField
+
+CustomFieldManager customFieldManager = ComponentAccessor.getCustomFieldManager()
+CustomField orderAmount = customFieldManager.getCustomFieldObjectByName("Order Amount")
+CustomField invoiceAmount = customFieldManager.getCustomFieldObjectByName("Invoice Amount")
+
+if (issue.getIssueTypeObject().getName() == "Milestone" && orderAmount != null && invoiceAmount != null) {
+
+    def invoiceValue = issue.getCustomFieldValue(invoiceAmount)
+    def orderValue = issue.getCustomFieldValue(orderAmount)
+
+    if (invoiceValue != null && orderAmount != null) {
+        if (orderValue > 0) {
+            return (((invoiceValue/orderValue) * 100) as int) + "%"
+        }
+    }
+}
+
+return
