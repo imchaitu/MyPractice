@@ -32,18 +32,23 @@ body {
 h1 {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
+  font-size: 8vmin;
+  margin-bottom: 1vmin;
 }
 
+.heading{
+  max-height: 20vmin;
+}
 /*
  * Styles for the deck of cards
  */
 .deck {
-  width: 660px;
-  min-height: 680px;
+  width: 70vmin;
+  min-height: 70vmin;
   background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
-  padding: 32px;
-  border-radius: 10px;
-  box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+  padding: 5vmin;
+  border-radius: 3vmin;
+  box-shadow: 2.5vmin 3vmin 3.5vmin 0 rgba(46, 61, 73, 0.5);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -52,17 +57,17 @@ h1 {
 }
 
 .deck .card {
-  height: 125px;
-  width: 125px;
+  width: calc(70vmin * (1/5));
+  height: calc(70vmin * (1/5));;
   background: #2e3d49;
   font-size: 0;
   color: #ffffff;
-  border-radius: 8px;
+  border-radius: 1.5vmin;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+  box-shadow: 1vmin 1.5vmin 3.5vmin 0 rgba(46, 61, 73, 0.5);
 }
 
 .deck .card.open {
@@ -72,32 +77,33 @@ h1 {
 }
 
 .deck .card.show {
-  font-size: 33px;
+  font-size: 5vmin;
 }
 
 .deck .card.match {
   cursor: default;
   background: #02ccba;
-  font-size: 33px;
+  font-size: 5vmin;
 }
 
 /*
  * Styles for the Score Panel
  */
 .score-panel {
+  font-size: 3vmin;
   text-align: left;
-  width: 345px;
-  margin-bottom: 10px;
+  width: 55vmin;
+  margin-bottom: 2vmin;
 }
 
 .score-panel .stars {
   margin: 0;
   padding: 0;
   display: inline-block;
-  margin: 0 5px 0 0;
+  margin: 0 0.2vmin 0 0;
 }
 
-.score-panel .stars li {
+.score-panel .stars li, .score-panel .timer {
   list-style: none;
   display: inline-block;
 }
@@ -105,4 +111,168 @@ h1 {
 .score-panel .restart {
   float: right;
   cursor: pointer;
+}
+
+/**
+ * Styles for score board displayed after game completed successfullly
+ */
+.win_card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif;
+  color: gray;
+  height: 70vmin;
+  display: none;
+  background-color: #ffffff;
+  margin: 5vmin;
+  border-radius: 5vmin;
+}
+
+.win_icon {
+  font-size: 20vmin;
+  color: lightgreen;
+}
+
+.win_text {
+  font-size: 4vmin;
+  font-weight: 800;
+}
+
+.win_score {
+  font-size: 3vmin;
+}
+
+.playAgain {
+  padding-left: 7vmin;
+  border-color: lightgreen;
+  padding-right: 7vmin;
+  border-radius: 4vmin;
+  color: white;
+  background-color: lightgreen;
+  cursor: pointer;
+}
+
+/** Additional custom animations for:
+ *   - flip open cards
+ *   - matched cards before getting stayed open
+ *   - unmatched ccards before closing them again
+*/
+li.card.open.matched-cards {
+  background-color: #02ccba;
+}
+
+li.card.open.unmatched-cards {
+  background-color: #ea6b52;
+}
+
+.flip-card-ani {
+  animation-name: flip-card;
+  animation-duration: 0.3s;
+  animation-iteration-count: 1;
+}
+
+.match-card-ani {
+  animation-name: match-card;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+}
+
+@-webkit-keyframes match-card {
+  0% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  30% {
+    -webkit-transform: scale(1.3, 0.6);
+    transform: scale(1.3, 0.6);
+  }
+
+  50% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  70% {
+    -webkit-transform: scale(1.1, 0.8);
+    transform: scale(1.1, 0.8);
+  }
+
+  80% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  90% {
+    -webkit-transform: scale(1.1, 0.8);
+    transform: scale(1.1, 0.8);
+  }
+
+  100% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes match-card {
+  0% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  30% {
+    -webkit-transform: scale(1.3, 0.6);
+    transform: scale(1.3, 0.6);
+  }
+
+  50% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  70% {
+    -webkit-transform: scale(1.1, 0.8);
+    transform: scale(1.1, 0.8);
+  }
+
+  80% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+
+  90% {
+    -webkit-transform: scale(1.1, 0.8);
+    transform: scale(1.1, 0.8);
+  }
+
+  100% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1);
+  }
+}
+
+@-webkit-keyframes flip-card {
+  0% {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+  }
+
+  100% {
+    -webkit-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+  }
+}
+
+@keyframes flip-card {
+  0% {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+  }
+
+  100% {
+    -webkit-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+  }
 }
