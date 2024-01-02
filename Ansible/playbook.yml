@@ -1,0 +1,7 @@
+# ansible -m copy -a "dest=hello content=world" localhost --check --diff
+
+- name: copy module test
+  hosts: localhost
+  tasks:
+    - copy: dest=hello content=world
+    - command: date
