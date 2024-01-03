@@ -1,5 +1,20 @@
 # ansible -m copy -a "dest=hello content=world" localhost --check --diff
 
+- name: configure macos settings
+  hosts: all, localhost
+  tags: macos
+  tasks:
+  - name: dump some facts
+    ansible.builtin.debug:
+      var: ansible_distribution
+  - name: ensure accent color is pint (6)
+    community.general.osx_defaults: 
+      domain: NSGlobalDomain
+      key: AppleAccentColor
+      type: integer
+      value: 2
+    when: ansible_distribution == "MacOSX"
+  
 - name: install nginx
   hosts: pi3
   tags: nginx
