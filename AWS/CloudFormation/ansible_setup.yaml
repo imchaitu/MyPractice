@@ -1,0 +1,243 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Create a setup for ansible practice. Creates 4 EC2 machines in private subnet. Once bastion host which also acts as ansible master
+Transform: 'AWS::LanguageExtensions'
+
+Resources:
+
+  AnsibleVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      Tags:
+        - Key: Name
+          Value: AnsibleVPC
+        - Key: Project
+          Value: Ansible
+  
+  AnsibleIGW:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags: 
+        - Key: Name
+          Value: AnsibleIGW
+        - Key: Project
+          Value: Ansbile
+
+  AnsibleIGWAttach:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref AnsibleIGW
+      VpcId: !Ref AnsibleVPC
+
+  AnsiblePubSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select [ 0, !GetAZs '' ]
+      CidrBlock: 10.0.1.0/24
+      VpcId: !Ref AnsibleVPC
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: AnsiblePubSubnet
+        - Key: Project
+          Value: Ansible
+
+  AnsiblePriSubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      AvailabilityZone: !Select [ 0, !GetAZs '' ]
+      CidrBlock: 10.0.2.0/24
+      VpcId: !Ref AnsibleVPC
+      Tags:
+        - Key: Name
+          Value: AnsiblePriSubnet
+        - Key: Project
+          Value: Ansible
+
+  AnsiblePubRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref AnsibleVPC
+      Tags:
+        - Key: Name
+          Value: AnsiblePubRouteTable
+        - Key: Project
+          Value: Ansible
+  
+  AnsiblePubRoute:
+    Type: AWS::EC2::Route
+    DependsOn: AnsibleIGW
+    Properties:
+       RouteTableId: !Ref AnsiblePubRouteTable
+       DestinationCidrBlock: 0.0.0.0/0
+       GatewayId: !Ref AnsibleIGW
+
+  AnsiblePubSubnetRouteAsso:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref AnsiblePubRouteTable
+      SubnetId: !Ref AnsiblePubSubnet
+
+  AnsibleKeyPair:
+    Type: AWS::EC2::KeyPair
+    Properties:
+      KeyName: AnsbileKeyPair
+      Tags:
+        - Key: Name
+          Value: AnsibleKeyPair
+        - Key: Project
+          Value: Ansible
+
+  AnsibleSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enabel SSH access
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          FromPort: 22
+          ToPort: 22
+          IpProtocol: tcp
+      VpcId: !Ref AnsibleVPC
+      Tags:
+        - Key: Name
+          Value: AnsibleSecurityGroup
+        - Key: Project
+          Value: Ansible
+  
+  AnsibleIAMEC2role:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: "EC2S3_ReadOnly"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "ec2.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess
+
+  AnsibleEC2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref AnsibleIAMEC2role
+
+  AnsibleBastionEC2:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-04a81a99f5ec58529
+      InstanceType: t2.micro
+      KeyName: !Ref AnsibleKeyPair
+      SecurityGroupIds:
+        - !Ref AnsibleSecurityGroup
+      SubnetId: !Ref AnsiblePubSubnet
+      IamInstanceProfile: !Ref AnsibleEC2InstanceProfile
+      UserData:
+        !Base64 |
+          #!/bin/bash
+          sudo apt install -y unzip
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+          aws s3 cp s3://ctatisetti-practice-ansible/master_user_data.sh ~/.
+          chmod +x master_user_data.sh
+          
+      Tags:
+        - Key: Name
+          Value: AnsibleBastionEC2
+        - Key: Project
+          Value: Ansible
+  
+  AnsibleEIP:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: !Ref AnsibleVPC
+      Tags:
+        - Key: Name
+          Value: AnsibleEIP
+        - Key: Project
+          Value: Ansible
+
+  AnsibleNAT:
+    Type: AWS::EC2::NatGateway
+    DependsOn: AnsibleEIP
+    Properties:
+      AllocationId: !GetAtt AnsibleEIP.AllocationId
+      SubnetId: !Ref AnsiblePubSubnet
+      Tags:
+        - Key: Name
+          Value: AnsibleNAT
+        - Key: Project
+          Value: Ansible
+
+  AnsiblePriRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref AnsibleVPC
+      Tags:
+        - Key: Name
+          Value: AnsiblePriRouteTable
+        - Key: Project
+          Value: Ansible
+  
+  AnsiblePriRoute:
+    Type: AWS::EC2::Route
+    DependsOn: AnsibleNAT
+    Properties:
+       RouteTableId: !Ref AnsiblePriRouteTable
+       DestinationCidrBlock: 0.0.0.0/0
+       NatGatewayId: !Ref AnsibleNAT
+
+  AnsiblePriSubnetRouteAsso:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref AnsiblePriRouteTable
+      SubnetId: !Ref AnsiblePriSubnet
+
+  Fn::ForEach::MainEC2:
+    - InstanceNo
+    - - "10"
+      - "11"
+      - "12"
+      - "13"
+    - AnsibleTgt${InstanceNo}:
+        Type: AWS::EC2::Instance
+        Properties:
+          ImageId: ami-04a81a99f5ec58529
+          InstanceType: t2.micro
+          KeyName: !Ref AnsibleKeyPair
+          SecurityGroupIds:
+            - !Ref AnsibleSecurityGroup
+          SubnetId: !Ref AnsiblePriSubnet
+          PrivateIpAddress: !Sub 10.0.2.${InstanceNo}
+          IamInstanceProfile: !Ref AnsibleEC2InstanceProfile
+          Tags:
+            - Key: Name
+              Value: !Sub AnsibleTgt${InstanceNo}
+            - Key: Project
+              Value: Ansible
+
+
+
+Outputs:
+  AnsibleVPCID:
+    Description: VPC ID
+    Value: !Ref AnsibleVPC
+  AnsiblePriSubnetID:
+    Description: Private Subnet ID
+    Value: !Ref AnsiblePriSubnet
+  AnsiblePubSubnetID:
+    Description: Private Subnet ID
+    Value: !Ref AnsiblePubSubnet
+  AnsibleKeyPair:
+    Description: Key Paid ID
+    Value: !Ref AnsibleKeyPair
+  AnsibleBastionPublicID:
+    Description: The public IP of bastion server used to connect
+    Value: !GetAtt AnsibleBastionEC2.PublicIp
